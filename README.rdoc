@@ -31,7 +31,7 @@ in your controller you can write a render like this:
     end
   end
   
-if you need a quick render, without any template you can write:
+or if you need a quick render, without any template you can write:
     ...
     format.xls { render :xls => @users}
     
@@ -40,23 +40,24 @@ the renderer will call to_xls method to the @users and return the file
 Note: if you use render :xlsx => @users you have to implement your own to_xlsx method.
 
 ===Views
-you have to create a template in your views folder for xls and xlsx, using book variable (xls) or package (xlsx)
+you have to create a template in your views folder for xls and xlsx:
+
+xls template expose the book variable, you can use as explained in Spreadsheet guide (http://spreadsheet.rubyforge.org/GUIDE_txt.html)
 
   #app/views/users/index.xls.maker
   sheet1 = book.create_worksheet
   sheet1.name = 'My First Worksheet'
   x = 0
   @user.each {|user| sheet1.row(x + 1).concat [user.name, user.age]}
-  #you can use spreadsheet gem syntax to create your file and use all variable exported from controller ( http://spreadsheet.rubyforge.org/GUIDE_txt.html )
   
-and for xlsx
+and for xlsx the template expose the package variable you can use as described in Axlsx site http://axlsx.blogspot.it/
+
   #app/views/users/index.xlsx.maker
   package.workbook do |wb|
     wb.add_worksheet do |sheet|
       @users.each { |user| sheet.add_row [user.name, user.age]}
     end
   end
-  #you can use axlsx gem syntax to create your file and use all variable exported from controller
   
 then in your view simply link the page using the right format:
   
@@ -80,6 +81,6 @@ You can watch the test/dummy application to find some working examples
 
 ==Thanks
 I want to thanks:
-- Daniel J. Berger, Hannes Wyss, GmbH, creators of the Spreadsheet gem that id the engine of the xls extension
+- Daniel J. Berger, Hannes Wyss, GmbH, creators of the Spreadsheet gem that is the engine of the xls extension
 - randym, creator of the Axlsx gem that powers the xlsx extension ( https://github.com/randym/axlsx )
 
