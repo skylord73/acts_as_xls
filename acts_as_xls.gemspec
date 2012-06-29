@@ -14,5 +14,9 @@ Gem::Specification.new do |s|
   s.name            = "acts_as_xls"
   s.require_paths   = ["lib"]
   s.version         = ActsAsXls::VERSION
+  
+  s.add_dependency "rails", "3.0.9"
+  s.add_dependency "spreadsheet"
+  s.add_dependency "axlsx"
 
 end
