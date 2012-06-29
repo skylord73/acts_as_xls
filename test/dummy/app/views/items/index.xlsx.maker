@@ -1,0 +1,7 @@
+#You have package = AXLSX::Package.new
+package.workbook do |wb|
+    wb.add_worksheet do |sheet|
+      sheet.add_row ["a","b","c"]
+      sheet.add_row [@test,"b","c"]
+    end
+end

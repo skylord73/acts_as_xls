@@ -1,0 +1,85 @@
+= ActsAsXls
+
+the gem add support for xls, xlsx file generation
+
+==Installation
+
+Add this line to your application's Gemfile:
+
+  gem 'acts_as_xls'
+
+And then execute:
+
+  $ bundle
+
+Or install it yourself as:
+
+  $ gem install acts_as_xls
+
+
+==Usage
+===Controler
+in your controller you can write a render like this:
+
+  #app/controllers/users_controller.rb
+  def index
+    @users = User.all
+    
+    respond_do |format
+      format.xls { render :xls => "index"}
+      format.xlsx { render :xlsx => "index"}
+    end
+  end
+  
+if you need a quick render, without any template you can write:
+    ...
+    format.xls { render :xls => @users}
+    
+the renderer will call to_xls method to the @users and return the file
+
+Note: if you use render :xlsx => @users you have to implement your own to_xlsx method.
+
+===Views
+you have to create a template in your views folder for xls and xlsx, using book variable (xls) or package (xlsx)
+
+  #app/views/users/index.xls.maker
+  sheet1 = book.create_worksheet
+  sheet1.name = 'My First Worksheet'
+  x = 0
+  @user.each {|user| sheet1.row(x + 1).concat [user.name, user.age]}
+  #you can use spreadsheet gem syntax to create your file and use all variable exported from controller ( http://spreadsheet.rubyforge.org/GUIDE_txt.html )
+  
+and for xlsx
+  #app/views/users/index.xlsx.maker
+  package.workbook do |wb|
+    wb.add_worksheet do |sheet|
+      @users.each { |user| sheet.add_row [user.name, user.age]}
+    end
+  end
+  #you can use axlsx gem syntax to create your file and use all variable exported from controller
+  
+then in your view simply link the page using the right format:
+  
+  #app/views/users/index.html.erb
+  <%= link_to "xls", users_path(:format => :xls) %>
+  <%= link_to "xlsx", users_path(:format => :xlsx) %>
+  
+===Options
+You can pass all renderers common options, plus :filename => "my_file_name.xls" | "my_file_name.xlsx" to change the default filename (file.xls or file.xlsx)
+
+==Examples
+You can watch the test/dummy application to find some working examples
+
+==Contributing
+
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Added some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
+
+==Thanks
+I want to thanks:
+- Daniel J. Berger, Hannes Wyss, GmbH, creators of the Spreadsheet gem that id the engine of the xls extension
+- randym, creator of the Axlsx gem that powers the xlsx extension ( https://github.com/randym/axlsx )
+
