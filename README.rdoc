@@ -1,6 +1,6 @@
 = ActsAsXls
 
-the gem add support for xls, xlsx file generation
+the gem add support for xls, xlsx file generation, using templates.
 
 ==Installation
 
