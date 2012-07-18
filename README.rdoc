@@ -2,7 +2,6 @@
 
 the gem add support for xls, xlsx file generation, using templates.
 
-
 ==Installation
 
 Add this line to your application's Gemfile:
