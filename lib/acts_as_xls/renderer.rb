@@ -15,7 +15,7 @@ ActionController::Renderers.add :xls do |obj, options|
     #No template, must render obj
     send_data obj.to_xls, :type => Mime::XLS, :filename => filename
   else
-    send_file render_to_string(options[:template]), :type => Mime::XLS, :disposition => "attachment; filename=#{filename}"
+    send_file render_to_string(options[:template].to_s), :type => Mime::XLS, :disposition => "attachment; filename=#{filename}"
   end
   
 end
@@ -31,7 +31,7 @@ ActionController::Renderers.add :xlsx do |obj, options|
     send_data obj.to_xlsx, :type => Mime::XLSX, :filename => filename
   else
     #Rails::logger.info("Renderer path=#{path}")
-    send_file render_to_string(options[:template]), :type => Mime::XLSX, :disposition => "attachment; filename=#{filename}"
+    send_file render_to_string(options[:template].to_s), :type => Mime::XLSX, :disposition => "attachment; filename=#{filename}"
   end
 end
 
