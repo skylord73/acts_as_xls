@@ -87,6 +87,7 @@ module ActsAsXls
         #this solution permits to extend che module adding new extesnions and renderers
         def render
           @temp = Tempfile.new("tmp")
+          File.chmod(0604, @temp.path)
           renderers = self.methods.select {|method| method.match(/^render_.*/)}
           Rails::logger.info("ActsAsXls::MAKER::Proxy renderers=#{renderers.inspect}")
           renderers.each {|r| eval(r)}
