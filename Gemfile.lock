@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    acts_as_xls (1.0.6)
+    acts_as_xls (1.0.5)
       axlsx
       rails (~> 3.0.14)
       spreadsheet
